@@ -6,7 +6,9 @@ const productClient = axios.create({
 });
 
 const getPage = async (page) => {
-  const response = await productClient.get(`products?page=${page}&perPage=${PER_PAGE}`);
+  const response = await productClient.get(
+    `products?page=${page}&perPage=${PER_PAGE}`
+  );
   return response.data;
 };
 

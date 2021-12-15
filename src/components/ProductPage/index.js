@@ -11,17 +11,23 @@ const ProductPage = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await productService.getPage(page);
-      setProducts(response.items);
-      setPaginationInfo({
-        totalItems: response.totalItems,
-        perPage: response.perPage,
-      });
-      setPage(page);
+      try {
+        const response = await productService.getPage(page);
+        setProducts(response.items);
+        setPaginationInfo({
+          totalItems: response.totalItems,
+          perPage: response.perPage,
+        });
+        setPage(page);
+      } catch (e) {
+        setProducts('error');
+      }
     })();
   }, [page]);
 
   if (!products || !paginationInfo) return 'loading';
+  if (products === 'error') return 'no connection';// to fix with notification
+
   return (
     <div className={st.productPageWrapper}>
       <ProductList products={products} />

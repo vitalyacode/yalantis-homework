@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import productService from '../../api/productService';
-import ProductCard from '../ProductCard/index';
+import ProductCardExtended from '../ProductCard/ProductCardExtended/index';
 
 const ProductInfo = () => {
   const { id } = useParams();
@@ -9,14 +9,17 @@ const ProductInfo = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await productService.getById(id);
-      setProduct(response);
+      try {
+        const response = await productService.getById(id);
+        setProduct(response);
+      } catch (e) {
+        setProduct('error');
+      }
     })();
   }, []);
   if (!product) return 'loading...';
-  return (
-    <ProductCard product={product}/>
-  );
+  if (product === 'error') return 'no connection';// to fix with notification
+  return <ProductCardExtended product={product} />;
 };
 
 export default ProductInfo;

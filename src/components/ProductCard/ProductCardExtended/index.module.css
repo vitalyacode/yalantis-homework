@@ -31,3 +31,8 @@
   cursor: pointer;
   font-size: 15px;
 }
+
+.additionalInfo {
+  padding-right: 10px;
+  font-size: 13px;
+}
