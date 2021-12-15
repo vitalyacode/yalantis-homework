@@ -13,7 +13,7 @@ module.exports = {
   },
   rules: {
     'prettier/prettier': [
-      'error',
+      'off',
       {
         '··endOfLine': 'auto',
       },
@@ -30,6 +30,9 @@ module.exports = {
       },
     ],
     'react/prop-types': 'off',
+    // 'arrow-body-style': 'always',
+    // 'implicit-arrow-linebreak': 'below'
   },
+
   plugins: ['prettier', 'react'],
 };

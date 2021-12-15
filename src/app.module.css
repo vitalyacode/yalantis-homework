@@ -1,0 +1,11 @@
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  /* min-height: 100vh; */
+}
+
+.app {
+  background-color: #f2f4f5;
+  min-height: 100vh;
+}
