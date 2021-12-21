@@ -35,17 +35,17 @@ const Pagination = ({
   const group = getPaginationGroup();
   return (
     <div className={st.paginationContainer}>
-      <span onClick={prevPage}>〈</span>
+      <button onClick={prevPage}>〈</button>
       {group.map((e) => (
-        <span
+        <button
           onClick={() => changePage(e)}
           key={e}
           className={e === page ? st.activePage : ''}
         >
           {e}
-        </span>
+        </button>
       ))}
-      <span onClick={nextPage}>〉</span>
+      <button onClick={nextPage}>〉</button>
     </div>
   );
 };

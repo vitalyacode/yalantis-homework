@@ -1,20 +1,24 @@
 import React from 'react';
-import { BrowserRouter, Routes } from 'react-router-dom';
-import ProductPageRoute from './routes/ProductPageRoute';
-import SingleProductPageRoute from './routes/SingleProductPageRoute';
-import CartPageRoute from './routes/CartPageRoute';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ProductPage from './components/ProductPage/index';
+import SingleProductPage from './components/ProductInfo/index';
+import CartPage from './components/CartPage/index';
 import st from './app.module.css';
 import ProductProvider from './providers/ProductProvider';
+import MainLayout from './layouts/MainLayout';
+import ROUTE_PATHS from './routes/routes';
 
 const App = () => (
   <div className={`App ${st.app}`}>
     <ProductProvider>
       <BrowserRouter>
-        <Routes>
-          {ProductPageRoute()}
-          {SingleProductPageRoute()}
-          {CartPageRoute()}
-        </Routes>
+        <MainLayout>
+          <Routes>
+            <Route path={ROUTE_PATHS.HOME} element={<ProductPage />} />
+            <Route path={ROUTE_PATHS.PRODUCT} element={<SingleProductPage />} />
+            <Route path={ROUTE_PATHS.CART} element={<CartPage />} />
+          </Routes>
+        </MainLayout>
       </BrowserRouter>
     </ProductProvider>
   </div>

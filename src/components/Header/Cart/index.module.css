@@ -2,16 +2,16 @@
   position: relative;
 }
 
-.items {
+.price {
   position: absolute;
   left: 65px;
   font-size: 15px;
   top: -5px;
   height: 20px;
-  width: 20px;
   background-color: #ff0000dc;
   text-align: center;
   line-height: 1.85;
-  border-radius: 50%;
+  border-radius: 3px;
+  padding: 0 2px;
   color: #f2f4f5;
 }

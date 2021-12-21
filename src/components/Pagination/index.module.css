@@ -8,12 +8,13 @@
 .paginationContainer * {
   width: 30px;
   height: 30px;
-  line-height: 37px;
-  font-weight: 15px;
+  font-size: 15px;
   user-select: none;
   cursor: pointer;
   text-align: center;
   border-radius: 50%;
+  border: none;
+  outline: none;;
 }
 
 .activePage {

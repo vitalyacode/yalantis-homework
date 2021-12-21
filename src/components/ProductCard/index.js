@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
 import { useProductDispatch } from '../../providers/ProductProvider';
+import types from '../../PropTypes/defaultProduct';
 
 const ProductCard = ({ product }) => {
   const dispatch = useProductDispatch();
@@ -27,6 +29,10 @@ const ProductCard = ({ product }) => {
       </div>
     </div>
   );
+};
+
+ProductCard.PropTypes = {
+  product: PropTypes.shape(types.defaultProduct),
 };
 
 export default ProductCard;

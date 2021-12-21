@@ -9,12 +9,12 @@ const Notification = ({ m }) => {
     if (!intervalId) setMessage(null);
   }, [message]);
 
-  setIntervalId(setInterval(() => {
-    setMessage(null);
-  }, 3000));
-  return <div>
-    {message}
-  </div>;
+  setIntervalId(
+    setInterval(() => {
+      setMessage(null);
+    }, 3000)
+  );
+  return <div>{message}</div>;
 };
 
 export default Notification;

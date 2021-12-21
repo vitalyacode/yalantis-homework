@@ -4,7 +4,11 @@ import { useProductState } from '../../../providers/ProductProvider';
 import st from './index.module.css';
 
 const Cart = () => {
-  const { quantity } = useProductState();
+  const { products } = useProductState();
+  const price = products.reduce(
+    (prev, curr) => prev + curr.price * curr.quantity,
+    0
+  );
   const location = useLocation();
   if (location.pathname === '/cart') return null;
   return (
@@ -12,7 +16,7 @@ const Cart = () => {
       <Link to="/cart" className={st.link}>
         <div style={{ display: 'flex' }}>
           Cart
-          <div className={st.items}>{quantity}</div>
+          <div className={st.price}>{price}</div>
         </div>
       </Link>
     </h1>

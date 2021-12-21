@@ -1,11 +1,12 @@
 import React, { createContext, useReducer, useContext } from 'react';
+import types from './types';
 
 const StateContext = createContext();
 const DispatchContext = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_PRODUCT': {
+    case types.ADD_PRODUCT: {
       const productToChange = state.products.find(
         (p) => p.id === action.payload.id
       );

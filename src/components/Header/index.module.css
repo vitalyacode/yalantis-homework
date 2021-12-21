@@ -4,10 +4,6 @@
   justify-content: center;
 }
 
-/* header * {
-  width: fit-content;
-} */
-
 .headerWrapper {
   display: flex;
   flex-direction: row;

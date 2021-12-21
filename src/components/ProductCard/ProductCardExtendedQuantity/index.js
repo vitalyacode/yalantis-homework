@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
+import types from '../../../PropTypes/defaultProduct';
 import {
   useProductDispatch,
   useProductState,
@@ -33,7 +35,7 @@ const ProductCardExtendedQuantity = ({ product }) => {
             <div>Quantity: {quantity}</div>
           </div>
           <div className={st.buyInfo}>
-            <span style={{ textAlign: 'center' }}>{product.price}₴</span>
+            <span className={st.price}>{product.price}₴</span>
             <button
               className={st.buyButton}
               onClick={() => dispatch({ type: 'ADD_PRODUCT', payload: product })
@@ -46,6 +48,10 @@ const ProductCardExtendedQuantity = ({ product }) => {
       </div>
     </div>
   );
+};
+
+ProductCardExtendedQuantity.PropTypes = {
+  product: PropTypes.shape(types.defaultProduct),
 };
 
 export default ProductCardExtendedQuantity;

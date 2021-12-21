@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import productService from '../../api/productService';
+import ErrorCard from '../ErrorCard';
 import Pagination from '../Pagination';
+import Preloader from '../Preloader';
 import ProductList from '../ProductList/index';
 import st from './index.module.css';
 
@@ -8,6 +10,8 @@ const ProductPage = () => {
   const [products, setProducts] = useState(null);
   const [paginationInfo, setPaginationInfo] = useState(null);
   const [page, setPage] = useState(1);
+
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -20,14 +24,13 @@ const ProductPage = () => {
         });
         setPage(page);
       } catch (e) {
-        setProducts('error');
+        setIsError(true);
       }
     })();
   }, [page]);
 
-  if (!products || !paginationInfo) return 'loading';
-  if (products === 'error') return 'no connection';// to fix with notification
-
+  if (isError) return <ErrorCard />;
+  if (!products || !paginationInfo) return <Preloader />;
   return (
     <div className={st.productPageWrapper}>
       <ProductList products={products} />

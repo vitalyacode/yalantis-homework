@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
 import { useProductDispatch } from '../../../providers/ProductProvider';
+import providerTypes from '../../../providers/types';
+import types from '../../../PropTypes/defaultProduct';
 
 const ProductCardExtended = ({ product }) => {
   const dispatch = useProductDispatch();
@@ -29,7 +32,7 @@ const ProductCardExtended = ({ product }) => {
             <span style={{ textAlign: 'center' }}>{product.price}₴</span>
             <button
               className={st.buyButton}
-              onClick={() => dispatch({ type: 'ADD_PRODUCT', payload: product })
+              onClick={() => dispatch({ type: providerTypes.ADD_PRODUCT, payload: product })
               }
             >
               Buy
@@ -39,6 +42,10 @@ const ProductCardExtended = ({ product }) => {
       </div>
     </div>
   );
+};
+
+ProductCardExtended.PropTypes = {
+  product: PropTypes.shape(types.defaultProduct),
 };
 
 export default ProductCardExtended;
