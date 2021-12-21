@@ -1,0 +1,38 @@
+.cardContainer {
+  width: 100%;
+  height: 100px;
+  background: #fff;
+}
+
+.cardInner {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardInner > * {
+  padding: 10px;
+}
+
+.productName {
+  margin: 0;
+  height: 100%;
+  height: fit-content;
+}
+
+.generalInfo,
+.buyInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.buyButton {
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.additionalInfo {
+  padding-right: 10px;
+  font-size: 13px;
+}

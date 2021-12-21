@@ -1,0 +1,12 @@
+.cartPageWrapper {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.totalPrice {
+  font-size: 35px;
+  text-align: right;
+}

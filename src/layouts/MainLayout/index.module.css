@@ -1,0 +1,11 @@
+.siteContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainContainer {
+  width: 1000px;
+  display: flex;
+}
