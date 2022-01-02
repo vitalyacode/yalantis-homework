@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ProductCard from '../ProductCard/index';
-import types from '../../PropTypes/defaultProduct';
 
-const ProductList = ({ products }) => products.map((p) => <ProductCard product={p} key={p.id} />);
+const ProductList = ({ productIds }) => productIds.map((p) => <ProductCard
+  productId={p}
+  key={p} />);
 
 ProductList.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.shape(types)),
+  productIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ProductList;

@@ -18,6 +18,7 @@ module.exports = {
         '··endOfLine': 'auto',
       },
     ],
+    'no-param-reassign': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'comma-dangle': [
       'error',

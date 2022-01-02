@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import productService from '../../api/productService';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchProducts,
+  selectPaginationInfo,
+  selectProductIds,
+  setPage,
+} from '../../store/productsSlice';
 import ErrorCard from '../ErrorCard';
 import Pagination from '../Pagination';
 import Preloader from '../Preloader';
@@ -7,38 +13,37 @@ import ProductList from '../ProductList/index';
 import st from './index.module.css';
 
 const ProductPage = () => {
-  const [products, setProducts] = useState(null);
-  const [paginationInfo, setPaginationInfo] = useState(null);
-  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+  const products = useSelector(selectProductIds);
+  const paginationInfo = useSelector(selectPaginationInfo);
 
-  const [isError, setIsError] = useState(false);
+  const { page } = paginationInfo;
+
+  const status = useSelector((state) => state.products.status);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await productService.getPage(page);
-        setProducts(response.items);
-        setPaginationInfo({
-          totalItems: response.totalItems,
-          perPage: response.perPage,
-        });
-        setPage(page);
-      } catch (e) {
-        setIsError(true);
-      }
-    })();
-  }, [page]);
+    if (products.length) {
+      dispatch(fetchProducts(page));
+    }
+  }, [page, dispatch]);
 
-  if (isError) return <ErrorCard />;
-  if (!products || !paginationInfo) return <Preloader />;
+  useEffect(() => {
+    if (!products.length) {
+      dispatch(fetchProducts(page));
+    }
+  }, []);
+
+  if (status === 'error') return <ErrorCard />;
+  if (status === 'loading' || status === 'idle') return <Preloader />;
+
   return (
     <div className={st.productPageWrapper}>
-      <ProductList products={products} />
+      <ProductList productIds={products} />
       <Pagination
         totalItems={paginationInfo.totalItems}
         perPage={paginationInfo.perPage}
         page={page}
-        handler={setPage}
+        handler={(p) => dispatch(setPage(p))}
       />
     </div>
   );

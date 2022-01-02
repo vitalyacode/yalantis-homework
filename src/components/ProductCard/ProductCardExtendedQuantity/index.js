@@ -5,20 +5,19 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
 import types from '../../../PropTypes/defaultProduct';
-import { addProduct, selectAllProducts } from '../../../store/productsSlice';
+import { addProduct, selectCartProductById } from '../../../store/cartSlice';
 
-const ProductCardExtendedQuantity = ({ product }) => {
+const ProductCardExtendedQuantity = ({ productId }) => {
   const dispatch = useDispatch();
-  const { quantity } = useSelector(selectAllProducts).find(
-    (p) => p.id === product.id
-  );
+
+  const product = useSelector((state) => selectCartProductById(state, productId));
 
   return (
     <div className={st.cardContainer}>
       <div className={st.cardInner}>
         <div className={st.generalInfo}>
           <h2 className={st.productName}>
-            <Link to={`/${product.id}`}>{product.name}</Link>
+            <Link to={`/${productId}`}>{product.name}</Link>
           </h2>
           <span>Origin: {product.origin}</span>
         </div>
@@ -30,14 +29,13 @@ const ProductCardExtendedQuantity = ({ product }) => {
             <div>
               Updated: {moment(product.updatedAt).format('YYYY-MM-DD HH:MM:SS')}
             </div>
-            <div>Quantity: {quantity}</div>
+            <div>Quantity: {product.quantity}</div>
           </div>
           <div className={st.buyInfo}>
             <span className={st.price}>{product.price}₴</span>
             <button
               className={st.buyButton}
-              onClick={() => dispatch(addProduct)
-              }
+              onClick={() => dispatch(addProduct(product))}
             >
               Buy
             </button>
