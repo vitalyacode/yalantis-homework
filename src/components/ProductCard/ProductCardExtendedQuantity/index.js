@@ -2,16 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
 import types from '../../../PropTypes/defaultProduct';
-import {
-  useProductDispatch,
-  useProductState,
-} from '../../../providers/ProductProvider';
+import { addProduct, selectAllProducts } from '../../../store/productsSlice';
 
 const ProductCardExtendedQuantity = ({ product }) => {
-  const dispatch = useProductDispatch();
-  const { quantity } = useProductState().products.find(
+  const dispatch = useDispatch();
+  const { quantity } = useSelector(selectAllProducts).find(
     (p) => p.id === product.id
   );
 
@@ -38,7 +36,7 @@ const ProductCardExtendedQuantity = ({ product }) => {
             <span className={st.price}>{product.price}₴</span>
             <button
               className={st.buyButton}
-              onClick={() => dispatch({ type: 'ADD_PRODUCT', payload: product })
+              onClick={() => dispatch(addProduct)
               }
             >
               Buy
@@ -50,7 +48,7 @@ const ProductCardExtendedQuantity = ({ product }) => {
   );
 };
 
-ProductCardExtendedQuantity.PropTypes = {
+ProductCardExtendedQuantity.propTypes = {
   product: PropTypes.shape(types.defaultProduct),
 };
 

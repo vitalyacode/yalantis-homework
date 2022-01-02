@@ -1,10 +1,11 @@
 import React from 'react';
 import st from './index.module.css';
-import { useProductState } from '../../providers/ProductProvider';
 import ProductCardExtendedQuantity from '../ProductCard/ProductCardExtendedQuantity';
+import { useSelector } from 'react-redux';
+import { selectAllProducts } from '../../store/productsSlice';
 
 const CartPage = () => {
-  const { products } = useProductState();
+  const { products } = useSelector(selectAllProducts);
   const price = products.reduce(
     (prev, curr) => prev + curr.price * curr.quantity,
     0

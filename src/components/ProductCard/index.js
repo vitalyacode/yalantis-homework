@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import st from './index.module.css';
-import { useProductDispatch } from '../../providers/ProductProvider';
 import types from '../../PropTypes/defaultProduct';
+import { addProduct } from '../../store/productsSlice';
 
 const ProductCard = ({ product }) => {
-  const dispatch = useProductDispatch();
+  const dispatch = useDispatch();
 
   return (
     <div className={st.cardContainer}>
@@ -21,7 +22,7 @@ const ProductCard = ({ product }) => {
           <span style={{ textAlign: 'center' }}>{product.price}₴</span>
           <button
             className={st.buyButton}
-            onClick={() => dispatch({ type: 'ADD_PRODUCT', payload: product })}
+            onClick={() => dispatch(addProduct({}))}
           >
             Buy
           </button>
@@ -31,7 +32,7 @@ const ProductCard = ({ product }) => {
   );
 };
 
-ProductCard.PropTypes = {
+ProductCard.propTypes = {
   product: PropTypes.shape(types.defaultProduct),
 };
 

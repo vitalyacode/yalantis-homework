@@ -1,10 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { useProductState } from '../../../providers/ProductProvider';
+import { selectAllProducts } from '../../../store/productsSlice';
 import st from './index.module.css';
 
 const Cart = () => {
-  const { products } = useProductState();
+  const products = useSelector(selectAllProducts);
   const price = products.reduce(
     (prev, curr) => prev + curr.price * curr.quantity,
     0
