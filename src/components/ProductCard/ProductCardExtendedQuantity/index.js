@@ -5,7 +5,13 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
 import types from '../../../PropTypes/defaultProduct';
-import { addProduct, selectCartProductById } from '../../../store/cartSlice';
+import {
+  addProduct,
+  incrementProduct,
+  decrementProduct,
+  setQuantity,
+  selectCartProductById,
+} from '../../../store/cartSlice';
 
 const ProductCardExtendedQuantity = ({ productId }) => {
   const dispatch = useDispatch();
@@ -29,7 +35,36 @@ const ProductCardExtendedQuantity = ({ productId }) => {
             <div>
               Updated: {moment(product.updatedAt).format('YYYY-MM-DD HH:MM:SS')}
             </div>
-            <div>Quantity: {product.quantity}</div>
+            <form
+              className={st.quantityForm}
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <button
+                className={st.quantityButton}
+                onClick={() => dispatch(incrementProduct(productId))}
+              >
+                <span>〈</span>
+              </button>
+              <input
+                value={product.quantity}
+                type="number"
+                name="quantity"
+                className={st.quantityInput}
+                min="1"
+                step="1"
+                pattern="^[-\d]\d*$"
+                onChange={(e) => dispatch(
+                  setQuantity({ id: productId, quantity: e.target.value })
+                )
+                }
+              ></input>
+              <button
+                className={st.quantityButton}
+                onClick={() => dispatch(decrementProduct(productId))}
+              >
+                <span>〉</span>
+              </button>
+            </form>
           </div>
           <div className={st.buyInfo}>
             <span className={st.price}>{product.price}₴</span>

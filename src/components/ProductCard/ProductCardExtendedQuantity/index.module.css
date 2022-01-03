@@ -35,8 +35,46 @@
 .additionalInfo {
   padding-right: 10px;
   font-size: 13px;
+  display: flex;
+  flex-direction: column;
 }
 
 .price {
   text-align: center;
+}
+
+.quantityInput {
+  width: 90px;
+  height: 100%;
+  padding: 0;
+  font-size: 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.quantityForm {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.quantityInput::-webkit-outer-spin-button,
+.quantityInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantityButton {
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 1px 4px;
+  cursor: pointer;
+  width: 30px;
+}
+
+.quantityButton span {
+  font-size: 16px;
+  transform: rotate(90deg) translateY(-30%);
 }

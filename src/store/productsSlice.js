@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import {
   createAsyncThunk,
   createEntityAdapter,
@@ -13,7 +11,7 @@ const initialState = productsAdapter.getInitialState({
   paginationInfo: {
     totalItems: 0,
     perPage: 0,
-    page: 1
+    page: 1,
   },
   status: 'idle',
   error: null,
@@ -32,9 +30,9 @@ const productsSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state, action) => {
-      const page = action.payload
-      state.paginationInfo.page = page
-    }
+      const page = action.payload;
+      state.paginationInfo.page = page;
+    },
   },
   extraReducers(builder) {
     builder
@@ -47,7 +45,7 @@ const productsSlice = createSlice({
         state.paginationInfo = {
           totalItems: action.payload.totalItems,
           perPage: action.payload.perPage,
-          page: action.payload.page
+          page: action.payload.page,
         };
       })
       .addCase(fetchProducts.rejected, (state, action) => {

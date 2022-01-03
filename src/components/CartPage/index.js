@@ -2,7 +2,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import st from './index.module.css';
 import ProductCardExtendedQuantity from '../ProductCard/ProductCardExtendedQuantity';
-import { selectAllCartProducts, selectCartProductIds } from '../../store/cartSlice';
+import {
+  selectAllCartProducts,
+  selectCartProductIds,
+} from '../../store/cartSlice';
 
 const CartPage = () => {
   const productIds = useSelector(selectCartProductIds);

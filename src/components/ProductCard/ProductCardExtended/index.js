@@ -12,9 +12,9 @@ import Preloader from '../../Preloader';
 
 const ProductCardExtended = ({ productId }) => {
   const dispatch = useDispatch();
-  const [product, setProduct] = useState(useSelector(
-    (state) => selectProductById(state, productId)
-  ));
+  const [product, setProduct] = useState(
+    useSelector((state) => selectProductById(state, productId))
+  );
 
   useEffect(() => {
     if (!product) {
