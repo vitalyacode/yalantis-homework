@@ -18,6 +18,10 @@ const cartSlice = createSlice({
         quantity: productToUpdate.quantity + 1,
       });
     },
+    removeProduct: (state, action) => {
+      if (!state.entities[action.payload]) return state;
+      return cartAdapter.removeOne(state, action.payload);
+    },
     incrementProduct: (state, action) => {
       const productToUpdate = state.entities[action.payload];
 
@@ -50,7 +54,7 @@ const cartSlice = createSlice({
 });
 
 export const {
-  addProduct, incrementProduct, decrementProduct, setQuantity,
+  addProduct, incrementProduct, decrementProduct, setQuantity, removeProduct,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

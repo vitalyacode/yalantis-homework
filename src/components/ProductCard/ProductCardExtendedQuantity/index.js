@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
 import types from '../../../PropTypes/defaultProduct';
 import {
-  addProduct,
   incrementProduct,
   decrementProduct,
   setQuantity,
   selectCartProductById,
+  removeProduct,
 } from '../../../store/cartSlice';
 
 const ProductCardExtendedQuantity = ({ productId }) => {
@@ -70,9 +70,9 @@ const ProductCardExtendedQuantity = ({ productId }) => {
             <span className={st.price}>{product.price}₴</span>
             <button
               className={st.buyButton}
-              onClick={() => dispatch(addProduct(product))}
+              onClick={() => dispatch(removeProduct(productId))}
             >
-              Buy
+              Delete
             </button>
           </div>
         </div>
