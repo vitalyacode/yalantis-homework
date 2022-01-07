@@ -7,7 +7,7 @@ const Header = () => (
   <header className={st.headerStyle}>
     <div className={st.headerWrapper}>
       <h1 className={st.logo}>
-        <Link to="/">VitalX</Link>
+        <Link to="/products">VitalX</Link>
       </h1>
       <Cart />
     </div>

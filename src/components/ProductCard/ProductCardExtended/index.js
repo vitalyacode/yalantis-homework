@@ -32,7 +32,7 @@ const ProductCardExtended = ({ productId }) => {
       <div className={st.cardInner}>
         <div className={st.generalInfo}>
           <h2 className={st.productName}>
-            <Link to={`/${productId}`}>{product.name}</Link>
+            <Link to={`/products/${productId}`}>{product.name}</Link>
           </h2>
           <span>Origin: {product.origin}</span>
         </div>

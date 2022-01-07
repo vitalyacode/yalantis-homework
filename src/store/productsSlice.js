@@ -19,8 +19,8 @@ const initialState = productsAdapter.getInitialState({
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
-  async (page) => {
-    const response = await productService.getPage(page);
+  async ({ page, parameters }) => {
+    const response = await productService.getPage(page, parameters);
     return response;
   }
 );

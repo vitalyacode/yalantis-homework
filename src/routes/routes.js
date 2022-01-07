@@ -1,6 +1,6 @@
 const ROUTE_PATHS = {
-  HOME: '/',
-  PRODUCT: '/:id',
+  HOME: '/products',
+  PRODUCT: '/products/:id',
   CART: '/cart',
 };
 
