@@ -33,6 +33,10 @@ const productsSlice = createSlice({
       const page = action.payload;
       state.paginationInfo.page = page;
     },
+    setPerPage: (state, action) => {
+      const perPage = action.payload;
+      state.paginationInfo.perPage = perPage;
+    },
   },
   extraReducers(builder) {
     builder
@@ -54,7 +58,7 @@ const productsSlice = createSlice({
   },
 });
 
-export const { addProduct, setPage } = productsSlice.actions;
+export const { addProduct, setPage, setPerPage } = productsSlice.actions;
 
 export default productsSlice.reducer;
 

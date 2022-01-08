@@ -17,10 +17,10 @@ const App = () => (
           <Route path={ROUTE_PATHS.HOME} element={<ProductPage />} />
           <Route path={ROUTE_PATHS.PRODUCT} element={<SingleProductPage />} />
           <Route path={ROUTE_PATHS.CART} element={<CartPage />} />
-          {/* <Route
+          <Route
             path="*"
             element={<Navigate to="/products" />}
-          /> */}
+          />
         </Routes>
       </MainLayout>
     </BrowserRouter>

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import usePriceInputs from '../../hooks/usePriceInputs';
 import {
   fetchProducts,
   selectPaginationInfo,
   selectProductIds,
   setPage,
+  setPerPage,
 } from '../../store/productsSlice';
 import { pruneObject } from '../../utils/pruneObject';
 import { toSearchObject } from '../../utils/toSearchObject';
 import CountryFilter from '../CountryFilter';
 import ErrorCard from '../ErrorCard';
 import Pagination from '../Pagination';
+import PerPage from '../PerPage';
 import Preloader from '../Preloader';
+import PriceFilter from '../PriceFilter';
 import ProductList from '../ProductList/index';
 import st from './index.module.css';
 
@@ -32,12 +36,25 @@ const ProductPage = () => {
     { value: 'asia', label: 'Asia' },
   ];
 
+  const paginationOptions = [
+    { value: 10, label: '10' },
+    { value: 25, label: '25' },
+    { value: 50, label: '50' },
+  ];
+
   const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedPerPage, setSelectedPerPage] = useState(10);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { minPrice, maxPrice, ...priceHandlers } = usePriceInputs();
+
   const handleCountryChange = (selected) => {
     setSelectedCountries(selected);
+  };
+  const handlePerPageChange = (selected) => {
+    setSelectedPerPage(selected);
+    dispatch(setPerPage);
   };
 
   const handleSearch = (e) => {
@@ -47,7 +64,9 @@ const ProductPage = () => {
 
     const params = {
       origins: [countries],
-      minPrice: null,
+      minPrice,
+      maxPrice,
+      perPage: selectedPerPage.value,
     };
     const parameters = pruneObject(params);
     setSearchParams(parameters);
@@ -74,10 +93,19 @@ const ProductPage = () => {
           handleCountryChange={handleCountryChange}
           selectedCountries={selectedCountries}
         />
-        {/* {?${encodeURIComponent(searchString)}} */}
-        {/* <Link to={{ pathname: '/products', search: `?${encodeURIComponent(searchString)}` }} > */}
+        <p className={st.filterLabel}>Price</p>
+        <PriceFilter
+          handlers={priceHandlers}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+        />
+        <p className={st.filterLabel}>Items per page</p>
+        <PerPage
+          options={paginationOptions}
+          selectedPerPage={selectedPerPage}
+          handlePerPageChange={handlePerPageChange}
+        />
         <button type="submit">Search</button>
-        {/* </Link> */}
       </form>
       <ProductList productIds={products} />
       <Pagination

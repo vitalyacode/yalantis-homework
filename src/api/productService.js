@@ -6,6 +6,7 @@ const httpClient = axios.create({
 });
 
 const getPage = async (page, parameters) => {
+  // if perPage provided, gets it from parameters
   const params = { page, perPage: PER_PAGE, ...parameters };
   const response = await httpClient.get('products', { params });
   return response.data;
