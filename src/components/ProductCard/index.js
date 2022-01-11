@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
 import { selectProductById } from '../../store/productsSlice';
 import { addProduct } from '../../store/cartSlice';
+import ROUTE_PATHS from '../../routes/routes';
 
 const ProductCard = ({ productId }) => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const ProductCard = ({ productId }) => {
       <div className={st.cardInner}>
         <div className={st.generalInfo}>
           <h2 className={st.productName}>
-            <Link to={`/products/${productId}`}>{product.name}</Link>
+            <Link to={ROUTE_PATHS.PRODUCT_ID(productId)}>{product.name}</Link>
           </h2>
           <span>Origin: {product.origin}</span>
         </div>

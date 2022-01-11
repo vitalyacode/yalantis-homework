@@ -12,6 +12,7 @@ import {
   selectCartProductById,
   removeProduct,
 } from '../../../store/cartSlice';
+import ROUTE_PATHS from '../../../routes/routes';
 
 const ProductCardExtendedQuantity = ({ productId }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const ProductCardExtendedQuantity = ({ productId }) => {
       <div className={st.cardInner}>
         <div className={st.generalInfo}>
           <h2 className={st.productName}>
-            <Link to={`/products/${productId}`}>{product.name}</Link>
+            <Link to={ROUTE_PATHS.PRODUCT_ID(productId)}>{product.name}</Link>
           </h2>
           <span>Origin: {product.origin}</span>
         </div>

@@ -6,6 +6,7 @@ import {
   fetchProducts,
   selectPaginationInfo,
   selectProductIds,
+  selectStatus,
   setPage,
   setPerPage,
 } from '../../store/productsSlice';
@@ -27,7 +28,7 @@ const ProductPage = () => {
 
   const { page } = paginationInfo;
 
-  const status = useSelector((state) => state.products.status);
+  const status = useSelector(selectStatus);
 
   const options = [
     { value: 'europe', label: 'Europe' },

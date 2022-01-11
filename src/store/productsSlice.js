@@ -64,6 +64,8 @@ export default productsSlice.reducer;
 
 export const selectPaginationInfo = (state) => state.products.paginationInfo;
 
+export const selectStatus = (state) => state.products.status;
+
 export const {
   selectAll: selectAllProducts,
   selectById: selectProductById,
