@@ -18,6 +18,7 @@ module.exports = {
         '··endOfLine': 'auto',
       },
     ],
+    'no-param-reassign': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'comma-dangle': [
       'error',
@@ -41,7 +42,7 @@ module.exports = {
     'max-len': [
       'warn',
       {
-        code: 100,
+        code: 120,
         ignoreStrings: true,
         ignoreTemplateLiterals: true,
         ignoreComments: true,

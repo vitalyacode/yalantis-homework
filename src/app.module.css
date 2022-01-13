@@ -9,6 +9,10 @@ body {
   box-sizing: border-box;
 }
 
+button {
+  cursor: pointer;
+}
+
 .app {
   background-color: #f2f4f5;
   min-height: 100vh;

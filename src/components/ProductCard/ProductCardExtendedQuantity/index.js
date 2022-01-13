@@ -2,25 +2,29 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
 import types from '../../../PropTypes/defaultProduct';
 import {
-  useProductDispatch,
-  useProductState,
-} from '../../../providers/ProductProvider';
+  incrementProduct,
+  decrementProduct,
+  setQuantity,
+  selectCartProductById,
+  removeProduct,
+} from '../../../store/cartSlice';
+import ROUTE_PATHS from '../../../routes/routes';
 
-const ProductCardExtendedQuantity = ({ product }) => {
-  const dispatch = useProductDispatch();
-  const { quantity } = useProductState().products.find(
-    (p) => p.id === product.id
-  );
+const ProductCardExtendedQuantity = ({ productId }) => {
+  const dispatch = useDispatch();
+
+  const product = useSelector((state) => selectCartProductById(state, productId));
 
   return (
     <div className={st.cardContainer}>
       <div className={st.cardInner}>
         <div className={st.generalInfo}>
           <h2 className={st.productName}>
-            <Link to={`/${product.id}`}>{product.name}</Link>
+            <Link to={ROUTE_PATHS.PRODUCT_ID(productId)}>{product.name}</Link>
           </h2>
           <span>Origin: {product.origin}</span>
         </div>
@@ -32,16 +36,44 @@ const ProductCardExtendedQuantity = ({ product }) => {
             <div>
               Updated: {moment(product.updatedAt).format('YYYY-MM-DD HH:MM:SS')}
             </div>
-            <div>Quantity: {quantity}</div>
+            <form
+              className={st.quantityForm}
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <button
+                className={st.quantityButton}
+                onClick={() => dispatch(incrementProduct(productId))}
+              >
+                <span>〈</span>
+              </button>
+              <input
+                value={product.quantity}
+                type="number"
+                name="quantity"
+                className={st.quantityInput}
+                min="1"
+                step="1"
+                pattern="^[-\d]\d*$"
+                onChange={(e) => dispatch(
+                  setQuantity({ id: productId, quantity: e.target.value })
+                )
+                }
+              ></input>
+              <button
+                className={st.quantityButton}
+                onClick={() => dispatch(decrementProduct(productId))}
+              >
+                <span>〉</span>
+              </button>
+            </form>
           </div>
           <div className={st.buyInfo}>
             <span className={st.price}>{product.price}₴</span>
             <button
               className={st.buyButton}
-              onClick={() => dispatch({ type: 'ADD_PRODUCT', payload: product })
-              }
+              onClick={() => dispatch(removeProduct(productId))}
             >
-              Buy
+              Delete
             </button>
           </div>
         </div>
@@ -50,7 +82,7 @@ const ProductCardExtendedQuantity = ({ product }) => {
   );
 };
 
-ProductCardExtendedQuantity.PropTypes = {
+ProductCardExtendedQuantity.propTypes = {
   product: PropTypes.shape(types.defaultProduct),
 };
 
