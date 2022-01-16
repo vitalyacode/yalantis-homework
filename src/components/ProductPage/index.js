@@ -115,7 +115,7 @@ const ProductPage = () => {
         page={page}
         handler={(p) => dispatch(setPage(p))}
       />
-    </div >
+    </div>
   );
 };
 
