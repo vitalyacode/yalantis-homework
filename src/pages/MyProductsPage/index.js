@@ -12,13 +12,13 @@ import {
 } from '../../store/productsSlice';
 import { pruneObject } from '../../utils/pruneObject';
 import { toSearchObject } from '../../utils/toSearchObject';
-import CountryFilter from '../CountryFilter';
-import ErrorCard from '../ErrorCard';
-import Pagination from '../Pagination';
-import PerPage from '../PerPage';
-import Preloader from '../Preloader';
-import PriceFilter from '../PriceFilter';
-import ProductList from '../ProductList/index';
+import CountryFilter from '../../components/CountryFilter';
+import ErrorCard from '../../components/ErrorCard';
+import Pagination from '../../components/Pagination';
+import PerPage from '../../components/PerPage';
+import Preloader from '../../components/Preloader';
+import PriceFilter from '../../components/PriceFilter';
+import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
 
 const ProductPage = () => {
@@ -106,7 +106,7 @@ const ProductPage = () => {
           selectedPerPage={selectedPerPage}
           handlePerPageChange={handlePerPageChange}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className={st.filterSearch}>Search</button>
       </form>
       <ProductList productIds={products} />
       <Pagination

@@ -3,9 +3,9 @@ import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import ProductPage from './components/ProductPage/index';
-import SingleProductPage from './components/ProductInfo/index';
-import CartPage from './components/CartPage/index';
+import ProductPage from './pages/ProductsPage/index';
+import SingleProductPage from './pages/ProductInfo/index';
+import CartPage from './pages/CartPage/index';
 import st from './app.module.css';
 import MainLayout from './layouts/MainLayout';
 import ROUTE_PATHS from './routes/routes';

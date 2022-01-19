@@ -16,7 +16,7 @@ const Cart = () => {
   return (
     <h1 className={st.cart}>
       <Link to={ROUTE_PATHS.CART} className={st.link}>
-        <div style={{ display: 'flex' }}>
+        <div className={st.flex}>
           Cart
           <div className={st.price}>{price}</div>
         </div>

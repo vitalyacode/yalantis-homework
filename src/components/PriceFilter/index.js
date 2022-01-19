@@ -11,6 +11,7 @@ const PriceFilter = ({ handlers, minPrice, maxPrice }) => (
         value={minPrice}
         onChange={handlers.handleMinPrice}
         onBlur={handlers.validateRange}
+        className={st.input}
       />
       <span className={st.textBetweenInputs}>to</span>
       <input
@@ -20,6 +21,7 @@ const PriceFilter = ({ handlers, minPrice, maxPrice }) => (
         value={maxPrice}
         onChange={handlers.handleMaxPrice}
         onBlur={handlers.validateRange}
+        className={st.input}
       />
     </div>
   </div>
