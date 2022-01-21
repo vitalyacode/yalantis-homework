@@ -25,6 +25,22 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+export const fetchEditableProducts = createAsyncThunk(
+  'products/fetchEditableProducts',
+  async ({ page, parameters }) => {
+    const response = await productService.getEditablePage(page, parameters);
+    return response;
+  }
+);
+
+export const editProduct = createAsyncThunk(
+  'products/editProduct',
+  async (payload) => {
+    const response = await productService.editProduct(payload);
+    return response;
+  }
+);
+
 const productsSlice = createSlice({
   name: 'products',
   initialState,
@@ -37,6 +53,7 @@ const productsSlice = createSlice({
       const perPage = action.payload;
       state.paginationInfo.perPage = perPage;
     },
+    resetProductsSlice: (state) => initialState,
   },
   extraReducers(builder) {
     builder
@@ -54,11 +71,29 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
-      });
+      })
+      .addCase(fetchEditableProducts.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchEditableProducts.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        productsAdapter.setAll(state, action.payload.items);
+        state.paginationInfo = {
+          totalItems: action.payload.totalItems,
+          perPage: action.payload.perPage,
+          page: action.payload.page,
+        };
+      })
+      .addCase(fetchEditableProducts.rejected, (state, action) => {
+        state.status = 'failed';
+      })
+      .addCase(editProduct.fulfilled, productsAdapter.setOne);
   },
 });
 
-export const { addProduct, setPage, setPerPage } = productsSlice.actions;
+export const {
+  addProduct, setPage, setPerPage, resetProductsSlice,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;
 

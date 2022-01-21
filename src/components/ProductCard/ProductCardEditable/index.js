@@ -1,30 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import st from './index.module.css';
 import types from '../../../PropTypes/defaultProduct';
-import { addProduct } from '../../../store/cartSlice';
 import { selectProductById } from '../../../store/productsSlice';
-import productService from '../../../api/productService';
 import Preloader from '../../Preloader';
 import ROUTE_PATHS from '../../../routes/routes';
 
-const ProductCardExtended = ({ productId }) => {
-  const dispatch = useDispatch();
-
-  const storeProduct = useSelector((state) => selectProductById(state, productId));
-  const [product, setProduct] = useState(storeProduct);
-
-  useEffect(() => {
-    if (!product) {
-      (async () => {
-        const response = await productService.getById(productId);
-        setProduct(response);
-      })();
-    }
-  }, []);
+const ProductCardEditable = ({ productId, handleFormToggle }) => {
+  const product = useSelector((state) => selectProductById(state, productId));
 
   if (!product) return <Preloader />;
 
@@ -50,19 +36,19 @@ const ProductCardExtended = ({ productId }) => {
             <span style={{ textAlign: 'center' }}>{product.price}₴</span>
             <button
               className={st.buyButton}
-              onClick={() => dispatch(addProduct(product))}
+              onClick={() => handleFormToggle(product)}
             >
-              Buy
+              Edit
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
-ProductCardExtended.propTypes = {
+ProductCardEditable.propTypes = {
   product: PropTypes.shape(types.defaultProduct),
 };
 
-export default ProductCardExtended;
+export default ProductCardEditable;

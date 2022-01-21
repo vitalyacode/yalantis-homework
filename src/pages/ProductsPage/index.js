@@ -9,6 +9,7 @@ import {
   selectStatus,
   setPage,
   setPerPage,
+  resetProductsSlice,
 } from '../../store/productsSlice';
 import { pruneObject } from '../../utils/pruneObject';
 import { toSearchObject } from '../../utils/toSearchObject';
@@ -21,7 +22,7 @@ import PriceFilter from '../../components/PriceFilter';
 import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
 
-const ProductPage = () => {
+const ProductsPage = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProductIds);
   const paginationInfo = useSelector(selectPaginationInfo);
@@ -75,13 +76,17 @@ const ProductPage = () => {
 
   const parameters = toSearchObject(searchParams);
 
+  // control request amount by "status" property in slice
   useEffect(() => {
-    dispatch(fetchProducts({ page, parameters }));
-  }, [page, dispatch]);
+    if (status !== 'idle') dispatch(fetchProducts({ page, parameters }));
+  }, [page, dispatch, searchParams]);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page: 1, parameters }));
-  }, [searchParams]);
+    if (status === 'idle') dispatch(fetchProducts({ page: 1, parameters }));
+    return () => {
+      dispatch(resetProductsSlice());// should i reset like that or add new slice?
+    };
+  }, []);
 
   if (status === 'error') return <ErrorCard />;
   if (status === 'loading' || status === 'idle') return <Preloader />;
@@ -119,4 +124,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductsPage;

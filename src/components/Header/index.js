@@ -12,6 +12,9 @@ const Header = () => (
         <Link to={ROUTE_PATHS.HOME}>VitalX</Link>
       </h1>
       <div className={st.actions}>
+        <h1>
+          <Link to={ROUTE_PATHS.MY_PRODUCTS}>My products</Link>
+        </h1>
         <AddProduct />
         <Cart />
       </div>

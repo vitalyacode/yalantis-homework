@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import usePriceInputs from '../../hooks/usePriceInputs';
 import {
-  fetchProducts,
+  fetchEditableProducts,
+  resetProductsSlice,
   selectPaginationInfo,
   selectProductIds,
   selectStatus,
@@ -18,10 +19,12 @@ import Pagination from '../../components/Pagination';
 import PerPage from '../../components/PerPage';
 import Preloader from '../../components/Preloader';
 import PriceFilter from '../../components/PriceFilter';
-import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
+import ProductListEditable from '../../components/ProductList/ProductListEditable';
+import Modal from '../../components/Modal';
+import EditProductForm from '../../components/Forms/EditProductForm';
 
-const ProductPage = () => {
+const MyProductsPage = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProductIds);
   const paginationInfo = useSelector(selectPaginationInfo);
@@ -29,6 +32,9 @@ const ProductPage = () => {
   const { page } = paginationInfo;
 
   const status = useSelector(selectStatus);
+
+  const [show, setShow] = useState(false);
+  const [initFormObject, setInitFormObject] = useState({});
 
   const options = [
     { value: 'europe', label: 'Europe' },
@@ -58,6 +64,11 @@ const ProductPage = () => {
     dispatch(setPerPage);
   };
 
+  const handleFormToggle = (obj) => { // this function is used in ProductList->ProductCard->edit button to get initObj
+    setInitFormObject(obj);
+    setShow(true);
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
 
@@ -76,18 +87,31 @@ const ProductPage = () => {
   const parameters = toSearchObject(searchParams);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page, parameters }));
-  }, [page, dispatch]);
+    if (status !== 'idle') dispatch(fetchEditableProducts({ page, parameters }));
+  }, [page, dispatch, searchParams]);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page: 1, parameters }));
-  }, [searchParams]);
+    if (status === 'idle') dispatch(fetchEditableProducts({ page: 1, parameters }));
+    return () => {
+      dispatch(resetProductsSlice());// should i reset like that or add new slice?
+    };
+  }, []);
 
   if (status === 'error') return <ErrorCard />;
   if (status === 'loading' || status === 'idle') return <Preloader />;
 
   return (
     <div className={st.productPageWrapper}>
+      <Modal
+        show={show}
+        onClose={() => setShow(false)}
+        title='Edit product'
+      >
+        <EditProductForm
+          onClose={() => setShow(false)}
+          initialObject={initFormObject}// get initFormObject in handleFormToggle function
+        />
+      </Modal>
       <form onSubmit={(e) => handleSearch(e)}>
         <CountryFilter
           options={options}
@@ -108,7 +132,11 @@ const ProductPage = () => {
         />
         <button type="submit" className={st.filterSearch}>Search</button>
       </form>
-      <ProductList productIds={products} />
+      <ProductListEditable
+        productIds={products}
+        show={show}
+        handleFormToggle={handleFormToggle}
+      />
       <Pagination
         totalItems={paginationInfo.totalItems}
         perPage={paginationInfo.perPage}
@@ -119,4 +147,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default MyProductsPage;

@@ -1,0 +1,14 @@
+.formButton {
+  font-size: 18px;
+  padding: 3px 10px;
+  border-radius: 15px;
+  border: 2px solid rgb(216, 216, 216);
+}
+
+.clearButton {
+  background: none;
+}
+
+.editButton {
+  background-color: rgb(38, 207, 80);
+}
