@@ -1,8 +1,17 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import orderService from '../api/orderService';
 
 const cartAdapter = createEntityAdapter(); // each entity will also have *quantity* property
 
 const initialState = cartAdapter.getInitialState({});
+
+export const postOrder = createAsyncThunk(
+  'cart/postOrder',
+  async (payload) => {
+    const response = await orderService.postOrder(payload);
+    return response;
+  }
+);
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -50,6 +59,12 @@ const cartSlice = createSlice({
       }
       return state;
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(postOrder.fulfilled, (state) => {
+        state = initialState;
+      });
   },
 });
 

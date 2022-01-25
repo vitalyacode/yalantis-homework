@@ -44,7 +44,7 @@ const ProductCardExtendedQuantity = ({ productId }) => {
                 className={st.quantityButton}
                 onClick={() => dispatch(incrementProduct(productId))}
               >
-                <span>〈</span>
+                <span>+</span>
               </button>
               <input
                 value={product.quantity}
@@ -63,7 +63,7 @@ const ProductCardExtendedQuantity = ({ productId }) => {
                 className={st.quantityButton}
                 onClick={() => dispatch(decrementProduct(productId))}
               >
-                <span>〉</span>
+                -
               </button>
             </form>
           </div>

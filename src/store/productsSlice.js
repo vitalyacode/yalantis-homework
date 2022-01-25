@@ -69,8 +69,8 @@ const productsSlice = createSlice({
           page: action.payload.page,
         };
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.status = 'failed';
+      .addCase(fetchProducts.rejected, (state) => {
+        state.status = 'error';
       })
       .addCase(fetchEditableProducts.pending, (state) => {
         state.status = 'loading';
@@ -84,8 +84,8 @@ const productsSlice = createSlice({
           page: action.payload.page,
         };
       })
-      .addCase(fetchEditableProducts.rejected, (state, action) => {
-        state.status = 'failed';
+      .addCase(fetchEditableProducts.rejected, (state) => {
+        state.status = 'error';
       })
       .addCase(editProduct.fulfilled, productsAdapter.setOne);
   },

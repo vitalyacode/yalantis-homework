@@ -1,0 +1,11 @@
+.orderContainer {
+  width: 100%;
+  background: #fff;
+  padding: 15px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+}

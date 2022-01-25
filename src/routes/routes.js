@@ -3,7 +3,9 @@ const ROUTE_PATHS = {
   PRODUCT: '/products/:id',
   CART: '/cart',
   MY_PRODUCTS: '/products/my',
+  ORDER: '/orders/:id',
   PRODUCT_ID: (id) => `/products/${id}`,
+  ORDER_ID: (id) => `/orders/${id}`,
 };
 
 export default ROUTE_PATHS;

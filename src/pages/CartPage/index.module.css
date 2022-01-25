@@ -9,4 +9,13 @@
 .totalPrice {
   font-size: 35px;
   text-align: right;
+  margin-bottom: 10px;
+}
+
+.submitOrder {
+  align-self: flex-end;
+  font-size: 24px;
+  padding: 6px 20px;
+  border-radius: 25px;
+  border: 2px solid rgb(216, 216, 216);
 }

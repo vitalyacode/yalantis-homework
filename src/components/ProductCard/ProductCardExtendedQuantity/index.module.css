@@ -66,15 +66,9 @@
 
 .quantityButton {
   height: 100%;
+  font-size: 24px;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
   padding: 1px 4px;
   cursor: pointer;
   width: 30px;
-}
-
-.quantityButton span {
-  font-size: 16px;
-  transform: rotate(90deg) translateY(-30%);
 }

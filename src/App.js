@@ -11,6 +11,7 @@ import MainLayout from './layouts/MainLayout';
 import ROUTE_PATHS from './routes/routes';
 import store from './store/store';
 import MyProductsPage from './pages/MyProductsPage';
+import OrderPage from './pages/SingleOrderPage';
 
 const App = () => (
   <div className={`App ${st.app}`}>
@@ -22,6 +23,7 @@ const App = () => (
             <Route path={ROUTE_PATHS.PRODUCT} element={<SingleProductPage />} />
             <Route path={ROUTE_PATHS.CART} element={<CartPage />} />
             <Route path={ROUTE_PATHS.MY_PRODUCTS} element={<MyProductsPage />} />
+            <Route path={ROUTE_PATHS.ORDER} element={<OrderPage />} />
             <Route
               path="*"
               element={<Navigate to={ROUTE_PATHS.HOME} />}

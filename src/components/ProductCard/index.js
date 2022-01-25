@@ -7,13 +7,13 @@ import { selectProductById } from '../../store/productsSlice';
 import { addProduct } from '../../store/cartSlice';
 import ROUTE_PATHS from '../../routes/routes';
 
-const ProductCard = ({ productId }) => {
+const ProductCard = ({ productId, className }) => {
   const dispatch = useDispatch();
 
   const product = useSelector((state) => selectProductById(state, productId));
 
   return (
-    <div className={st.cardContainer}>
+    <div className={`${className || st.cardContainer}`}>
       <div className={st.cardInner}>
         <div className={st.generalInfo}>
           <h2 className={st.productName}>
