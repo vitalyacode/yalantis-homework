@@ -2,6 +2,10 @@
   width: 100%;
   background: #fff;
   padding: 15px;
+  box-sizing: border-box;
+}
+.border {
+  border-bottom: 1px dashed rgb(0, 0, 0);
 }
 
 .total {

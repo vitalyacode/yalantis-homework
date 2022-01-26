@@ -8,10 +8,18 @@ const initialState = ordersAdapter.getInitialState({
   error: null,
 });
 
-export const fetchOrder = createAsyncThunk(
-  'orders/getOrder',
+export const fetchOrderById = createAsyncThunk(
+  'orders/getOrderById',
   async (id) => {
     const response = await orderService.getById(id);
+    return response;
+  }
+);
+
+export const fetchOrders = createAsyncThunk(
+  'orders/getOrder',
+  async () => {
+    const response = await orderService.getAll();
     return response;
   }
 );
@@ -20,27 +28,38 @@ const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {
-
+    resetOrdersSlice: (state) => initialState,
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchOrder.pending, (state) => {
+      .addCase(fetchOrderById.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchOrder.fulfilled, (state, action) => {
+      .addCase(fetchOrderById.fulfilled, (state, action) => {
         state.status = 'succeeded';
         ordersAdapter.setAll(state, [action.payload]);
       })
-      .addCase(fetchOrder.rejected, (state) => {
+      .addCase(fetchOrderById.rejected, (state) => {
         state.status = 'error';
         state.error = 'Cannot get order';
+      })
+      .addCase(fetchOrders.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        ordersAdapter.setAll(state, action.payload.items);
+      })
+      .addCase(fetchOrders.rejected, (state) => {
+        state.status = 'error';
+        state.error = 'Cannot get orders';
       });
   },
 });
 
-// export const {
-
-// } = orderSlice.actions;
+export const {
+  resetOrdersSlice,
+} = ordersSlice.actions;
 
 export default ordersSlice.reducer;
 

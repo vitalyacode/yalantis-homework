@@ -22,9 +22,15 @@ const getById = async (id) => {
   return response.data;
 };
 
+const getAll = async () => {
+  const response = await httpClient.get('orders');
+  return response.data;
+};
+
 const orderService = {
   postOrder,
   getById,
+  getAll,
 };
 
 export default orderService;

@@ -1,24 +1,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import ErrorCard from '../../components/ErrorCard';
 import OrderCard from '../../components/OrderCard';
 import Preloader from '../../components/Preloader';
-import {
-  fetchOrderById, resetOrdersSlice, selectOrderById, selectOrdersStatus,
-} from '../../store/ordersSlice';
 import st from './index.module.css';
+import {
+  fetchOrders, resetOrdersSlice, selectOrderIds, selectOrdersStatus,
+} from '../../store/ordersSlice';
 
-const SingleOrderPage = () => {
+const OrdersPage = () => {
   const dispatch = useDispatch();
 
-  const { id } = useParams();
-
   const status = useSelector(selectOrdersStatus);
-  const order = useSelector((state) => selectOrderById(state, id));
+  const orderIds = useSelector(selectOrderIds);
 
   useEffect(() => {
-    if (status === 'idle' && !order) dispatch(fetchOrderById(id));
+    if (status === 'idle') dispatch(fetchOrders());
 
     return () => {
       dispatch(resetOrdersSlice());
@@ -30,9 +27,9 @@ const SingleOrderPage = () => {
 
   return (
     <div className={st.ordersContainer}>
-      <OrderCard id={order.id} />
-    </div>
+      {orderIds.map((orderId) => <OrderCard id={orderId} key={orderId} isList={true} />)}
+    </div >
   );
 };
 
-export default SingleOrderPage;
+export default OrdersPage;
