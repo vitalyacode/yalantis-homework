@@ -23,6 +23,7 @@ import st from './index.module.css';
 import ProductListEditable from '../../components/ProductList/ProductListEditable';
 import Modal from '../../components/Modal';
 import EditProductForm from '../../components/Forms/EditProductForm';
+import useParamsSetup from '../../hooks/useParamsSetup';
 
 const MyProductsPage = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,11 @@ const MyProductsPage = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { minPrice, maxPrice, ...priceHandlers } = usePriceInputs();
+  const {
+    minPrice, maxPrice, setMinPrice, setMaxPrice, ...priceHandlers
+  } = usePriceInputs();
+
+  useParamsSetup(options, paginationOptions, setSelectedCountries, setSelectedPerPage, setMinPrice, setMaxPrice);
 
   const handleCountryChange = (selected) => {
     setSelectedCountries(selected);

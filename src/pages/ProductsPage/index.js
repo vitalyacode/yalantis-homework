@@ -21,6 +21,7 @@ import Preloader from '../../components/Preloader';
 import PriceFilter from '../../components/PriceFilter';
 import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
+import useParamsSetup from '../../hooks/useParamsSetup';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -45,11 +46,14 @@ const ProductsPage = () => {
   ];
 
   const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedPerPage, setSelectedPerPage] = useState(10);
+  const [selectedPerPage, setSelectedPerPage] = useState(paginationOptions[0]);
+  const {
+    minPrice, maxPrice, setMinPrice, setMaxPrice, ...priceHandlers
+  } = usePriceInputs();
+
+  useParamsSetup(options, paginationOptions, setSelectedCountries, setSelectedPerPage, setMinPrice, setMaxPrice);
 
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const { minPrice, maxPrice, ...priceHandlers } = usePriceInputs();
 
   const handleCountryChange = (selected) => {
     setSelectedCountries(selected);

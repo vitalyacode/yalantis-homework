@@ -18,7 +18,7 @@ const usePriceInputs = () => {
   };
 
   return {
-    minPrice, handleMinPrice, maxPrice, handleMaxPrice, validateRange,
+    minPrice, handleMinPrice, maxPrice, handleMaxPrice, validateRange, setMinPrice, setMaxPrice,
   };
 };
 
