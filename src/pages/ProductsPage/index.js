@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import { useDebounce } from 'use-debounce';
 import usePriceInputs from '../../hooks/usePriceInputs';
 import {
   fetchProducts,
@@ -22,6 +23,7 @@ import PriceFilter from '../../components/PriceFilter';
 import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
 import useParamsSetup from '../../hooks/useParamsSetup';
+import useDebouncedValues from '../../hooks/useDebouncedValues';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -55,16 +57,8 @@ const ProductsPage = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleCountryChange = (selected) => {
-    setSelectedCountries(selected);
-  };
-  const handlePerPageChange = (selected) => {
-    setSelectedPerPage(selected);
-    dispatch(setPerPage);
-  };
-
   const handleSearch = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     const countries = selectedCountries.map((el) => el.value);
 
@@ -78,12 +72,30 @@ const ProductsPage = () => {
     setSearchParams(parameters);
   };
 
+  const handleCountryChange = (selected) => {
+    setSelectedCountries(selected);
+  };
+  const handlePerPageChange = (selected) => {
+    setSelectedPerPage(selected);
+    dispatch(setPerPage);
+  };
   const parameters = toSearchObject(searchParams);
 
   // control request amount by "status" property in slice
   useEffect(() => {
     if (status !== 'idle') dispatch(fetchProducts({ page, parameters }));
   }, [page, dispatch, searchParams]);
+
+  const [
+    debouncedCountries,
+    debouncedMinPrice,
+    debouncedMaxPrice,
+  ] = useDebouncedValues(selectedCountries, minPrice, maxPrice, 500);
+  useEffect(() => {
+    if (status !== 'idle') {
+      handleSearch();
+    }
+  }, [debouncedCountries, debouncedMinPrice, debouncedMaxPrice]);
 
   useEffect(() => {
     if (status === 'idle') dispatch(fetchProducts({ page: 1, parameters }));

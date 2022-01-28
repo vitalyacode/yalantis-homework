@@ -14,7 +14,8 @@
   text-align: center;
   border-radius: 50%;
   border: none;
-  outline: none;;
+  outline: none;
+  background: none;
 }
 
 .activePage {

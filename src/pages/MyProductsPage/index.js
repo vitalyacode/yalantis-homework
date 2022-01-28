@@ -24,6 +24,7 @@ import ProductListEditable from '../../components/ProductList/ProductListEditabl
 import Modal from '../../components/Modal';
 import EditProductForm from '../../components/Forms/EditProductForm';
 import useParamsSetup from '../../hooks/useParamsSetup';
+import useDebouncedValues from '../../hooks/useDebouncedValues';
 
 const MyProductsPage = () => {
   const dispatch = useDispatch();
@@ -94,6 +95,17 @@ const MyProductsPage = () => {
   useEffect(() => {
     if (status !== 'idle') dispatch(fetchEditableProducts({ page, parameters }));
   }, [page, dispatch, searchParams]);
+
+  const [
+    debouncedCountries,
+    debouncedMinPrice,
+    debouncedMaxPrice,
+  ] = useDebouncedValues(selectedCountries, minPrice, maxPrice, 500);
+  useEffect(() => {
+    if (status !== 'idle') {
+      handleSearch();
+    }
+  }, [debouncedCountries, debouncedMinPrice, debouncedMaxPrice]);
 
   useEffect(() => {
     if (status === 'idle') dispatch(fetchEditableProducts({ page: 1, parameters }));
