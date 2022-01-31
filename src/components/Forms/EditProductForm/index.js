@@ -16,7 +16,7 @@ const schema = yup.object({
     .required('Name is required'),
   price: yup.number()
     .typeError('Price must be a number')
-    .integer() // should price be an integer?
+    .integer()
     .positive('Price must be greater than 0')
     .required('Price is required'),
   origin: yup.string().required('Origin is required'),

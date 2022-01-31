@@ -1,5 +1,5 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import orderService from '../api/orderService';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createOrderActions } from '../utils/constants';
 
 const cartAdapter = createEntityAdapter(); // each entity will also have *quantity* property
 
@@ -7,13 +7,15 @@ const initialState = cartAdapter.getInitialState({
   status: 'idle',
 });
 
-export const postOrder = createAsyncThunk(
-  'cart/postOrder',
-  async (payload) => {
-    const response = await orderService.postOrder(payload);
-    return response;
-  }
-);
+// commented code according to hw-4 guidelines
+
+// export const postOrder = createAsyncThunk(
+//   'cart/postOrder',
+//   async (payload) => {
+//     const response = await orderService.postOrder(payload);
+//     return response;
+//   }
+// );
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -65,11 +67,11 @@ const cartSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(postOrder.fulfilled, (state) => {
+      .addCase(createOrderActions.success, (state) => {
         state.status = 'success';
         state = initialState;
       })
-      .addCase(postOrder.rejected, (state) => {
+      .addCase(createOrderActions.error, (state) => {
         state.status = 'error';
       });
   },

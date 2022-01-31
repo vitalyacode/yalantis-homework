@@ -15,12 +15,11 @@ const OrdersPage = () => {
   const orderIds = useSelector(selectOrderIds);
 
   useEffect(() => {
-    if (status === 'idle') dispatch(fetchOrders());
-
-    return () => {
-      dispatch(resetOrdersSlice());
-    };
+    dispatch(resetOrdersSlice());
   }, []);
+  useEffect(() => {
+    if (status === 'idle') dispatch(fetchOrders());
+  }, [status]);
 
   if (status === 'error') return <ErrorCard />;
   if (status === 'loading' || status === 'idle') return <Preloader />;

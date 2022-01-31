@@ -23,7 +23,6 @@ import st from './index.module.css';
 import ProductListEditable from '../../components/ProductList/ProductListEditable';
 import Modal from '../../components/Modal';
 import EditProductForm from '../../components/Forms/EditProductForm';
-import useParamsSetup from '../../hooks/useParamsSetup';
 import useDebouncedValues from '../../hooks/useDebouncedValues';
 
 const MyProductsPage = () => {
@@ -51,16 +50,21 @@ const MyProductsPage = () => {
     { value: 50, label: '50' },
   ];
 
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedPerPage, setSelectedPerPage] = useState(10);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [selectedCountries, setSelectedCountries] = useState(
+    searchParams
+      .get('origins')
+      ?.split(',')
+      .map((country) => options.find((option) => option.value === country)) || []
+  );
+  const [selectedPerPage, setSelectedPerPage] = useState(
+    paginationOptions.find((option) => option.value === parseInt(searchParams.get('perPage'), 10))
+    || paginationOptions[0]
+  );
   const {
-    minPrice, maxPrice, setMinPrice, setMaxPrice, ...priceHandlers
-  } = usePriceInputs();
-
-  useParamsSetup(options, paginationOptions, setSelectedCountries, setSelectedPerPage, setMinPrice, setMaxPrice);
+    minPrice, maxPrice, ...priceHandlers
+  } = usePriceInputs(searchParams);
 
   const handleCountryChange = (selected) => {
     setSelectedCountries(selected);
@@ -76,7 +80,7 @@ const MyProductsPage = () => {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     const countries = selectedCountries.map((el) => el.value);
 
@@ -93,7 +97,7 @@ const MyProductsPage = () => {
   const parameters = toSearchObject(searchParams);
 
   useEffect(() => {
-    if (status !== 'idle') dispatch(fetchEditableProducts({ page, parameters }));
+    if (status !== 'idle' && status !== 'loading') dispatch(fetchEditableProducts({ page, parameters }));
   }, [page, dispatch, searchParams]);
 
   const [
@@ -110,7 +114,7 @@ const MyProductsPage = () => {
   useEffect(() => {
     if (status === 'idle') dispatch(fetchEditableProducts({ page: 1, parameters }));
     return () => {
-      dispatch(resetProductsSlice());// should i reset like that or add new slice?
+      dispatch(resetProductsSlice());
     };
   }, []);
 

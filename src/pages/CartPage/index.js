@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import st from './index.module.css';
 import ProductCardExtendedQuantity from '../../components/ProductCard/ProductCardExtendedQuantity';
 import {
-  postOrder,
   resetCartSlice,
   selectAllCartProducts,
   selectCartProductIds,
@@ -12,6 +11,7 @@ import {
 } from '../../store/cartSlice';
 import ErrorCard from '../../components/ErrorCard';
 import ROUTE_PATHS from '../../routes/routes';
+import { createOrderActions } from '../../utils/constants';
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const CartPage = () => {
   useEffect(() => () => dispatch(resetCartSlice()), []);
 
   const handleSubmit = () => {
-    if (products.length) dispatch(postOrder(products));
+    if (products.length) dispatch(createOrderActions.init(products));
   };
 
   if (status === 'success') {

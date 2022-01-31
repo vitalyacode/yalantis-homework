@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { useDebounce } from 'use-debounce';
 import usePriceInputs from '../../hooks/usePriceInputs';
 import {
   fetchProducts,
@@ -22,7 +21,6 @@ import Preloader from '../../components/Preloader';
 import PriceFilter from '../../components/PriceFilter';
 import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
-import useParamsSetup from '../../hooks/useParamsSetup';
 import useDebouncedValues from '../../hooks/useDebouncedValues';
 
 const ProductsPage = () => {
@@ -47,15 +45,21 @@ const ProductsPage = () => {
     { value: 50, label: '50' },
   ];
 
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedPerPage, setSelectedPerPage] = useState(paginationOptions[0]);
-  const {
-    minPrice, maxPrice, setMinPrice, setMaxPrice, ...priceHandlers
-  } = usePriceInputs();
-
-  useParamsSetup(options, paginationOptions, setSelectedCountries, setSelectedPerPage, setMinPrice, setMaxPrice);
-
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [selectedCountries, setSelectedCountries] = useState(
+    searchParams
+      .get('origins')
+      ?.split(',')
+      .map((country) => options.find((option) => option.value === country)) || []
+  );
+  const [selectedPerPage, setSelectedPerPage] = useState(
+    paginationOptions.find((option) => option.value === parseInt(searchParams.get('perPage'), 10))
+    || paginationOptions[0]
+  );
+  const {
+    minPrice, maxPrice, ...priceHandlers
+  } = usePriceInputs(searchParams);
 
   const handleSearch = (e) => {
     if (e) e.preventDefault();
@@ -83,7 +87,7 @@ const ProductsPage = () => {
 
   // control request amount by "status" property in slice
   useEffect(() => {
-    if (status !== 'idle') dispatch(fetchProducts({ page, parameters }));
+    if (status !== 'idle' && status !== 'loading') dispatch(fetchProducts({ page, parameters }));
   }, [page, dispatch, searchParams]);
 
   const [
@@ -100,7 +104,7 @@ const ProductsPage = () => {
   useEffect(() => {
     if (status === 'idle') dispatch(fetchProducts({ page: 1, parameters }));
     return () => {
-      dispatch(resetProductsSlice());// should i reset like that or add new slice?
+      dispatch(resetProductsSlice());
     };
   }, []);
 

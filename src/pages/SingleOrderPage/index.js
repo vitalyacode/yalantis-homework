@@ -5,8 +5,9 @@ import ErrorCard from '../../components/ErrorCard';
 import OrderCard from '../../components/OrderCard';
 import Preloader from '../../components/Preloader';
 import {
-  fetchOrderById, resetOrdersSlice, selectOrderById, selectOrdersStatus,
+  resetOrdersSlice, selectOrderById, selectOrdersStatus,
 } from '../../store/ordersSlice';
+import { orderByIdActions } from '../../utils/constants';
 import st from './index.module.css';
 
 const SingleOrderPage = () => {
@@ -18,11 +19,8 @@ const SingleOrderPage = () => {
   const order = useSelector((state) => selectOrderById(state, id));
 
   useEffect(() => {
-    if (status === 'idle' && !order) dispatch(fetchOrderById(id));
-
-    return () => {
-      dispatch(resetOrdersSlice());
-    };
+    if (!order) dispatch(resetOrdersSlice());
+    if (status === 'idle') dispatch(orderByIdActions.init(id));
   }, []);
 
   if (status === 'error') return <ErrorCard />;

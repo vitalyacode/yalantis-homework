@@ -1,5 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import orderService from '../api/orderService';
+import { orderByIdActions } from '../utils/constants';
 
 const ordersAdapter = createEntityAdapter();
 
@@ -8,13 +9,15 @@ const initialState = ordersAdapter.getInitialState({
   error: null,
 });
 
-export const fetchOrderById = createAsyncThunk(
-  'orders/getOrderById',
-  async (id) => {
-    const response = await orderService.getById(id);
-    return response;
-  }
-);
+// commented code according to hw-4 guidelines
+
+// export const fetchOrderById = createAsyncThunk(
+//   'orders/getOrderById',
+//   async (id) => {
+//     const response = await orderService.getById(id);
+//     return response;
+//   }
+// );
 
 export const fetchOrders = createAsyncThunk(
   'orders/getOrder',
@@ -32,14 +35,14 @@ const ordersSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchOrderById.pending, (state) => {
+      .addCase(orderByIdActions.start, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchOrderById.fulfilled, (state, action) => {
+      .addCase(orderByIdActions.success, (state, action) => {
         state.status = 'succeeded';
         ordersAdapter.setAll(state, [action.payload]);
       })
-      .addCase(fetchOrderById.rejected, (state) => {
+      .addCase(orderByIdActions.error, (state) => {
         state.status = 'error';
         state.error = 'Cannot get order';
       })
