@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
 import productService from '../../../api/productService';
 import formStyles from '../formStyles.module.css';
@@ -9,6 +10,7 @@ import { editProduct } from '../../../store/productsSlice';
 import { options } from '../../../utils/constants';
 import { productSchema } from '../../../.yup/productSchema';
 import Form from '../Form/Form';
+import { defaultEditProductForm } from '../../../PropTypes/productTypes';
 
 const EditProductForm = ({
   initialObject: {
@@ -82,6 +84,11 @@ const EditProductForm = ({
       </div>
     </Form>
   );
+};
+
+EditProductForm.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  initialObject: PropTypes.shape(defaultEditProductForm),
 };
 
 export default EditProductForm;

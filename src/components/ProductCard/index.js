@@ -37,6 +37,7 @@ const ProductCard = ({ productId, className }) => {
 
 ProductCard.propTypes = {
   productId: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default ProductCard;

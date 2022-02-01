@@ -1,10 +1,21 @@
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
+import { optionType } from '../../../PropTypes/options';
 
 const Form = ({
-  handleSubmit, onSubmit, formDisabled, errors, register, control, options, submitError, submitMessage, children,
+  handleSubmit,
+  onSubmit,
+  formDisabled,
+  errors,
+  register,
+  control,
+  options,
+  submitError = 'Something went wrong',
+  submitMessage = 'Success',
+  children,
 }) => (<form onSubmit={handleSubmit(onSubmit)}>
   <fieldset disabled={formDisabled} className={st.addProductFieldset}>
     <div className={st.inputLabelWrapper}>
@@ -41,5 +52,15 @@ const Form = ({
   </fieldset>
 
 </form>);
+
+Form.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  formDisabled: PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.shape(optionType)),
+  submitError: PropTypes.bool,
+  submitMessage: PropTypes.string,
+  children: PropTypes.element,
+};
 
 export default Form;

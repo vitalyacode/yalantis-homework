@@ -16,6 +16,9 @@ const Header = () => (
           <Link to={ROUTE_PATHS.MY_PRODUCTS}>My products</Link>
         </h1>
         <AddProduct />
+        <h1>
+          <Link to={ROUTE_PATHS.MY_ORDERS}>Orders</Link>
+        </h1>
         <Cart />
       </div>
     </div>

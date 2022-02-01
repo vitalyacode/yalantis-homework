@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
 
 const PriceFilter = ({ handlers, minPrice, maxPrice }) => (
@@ -26,5 +27,11 @@ const PriceFilter = ({ handlers, minPrice, maxPrice }) => (
     </div>
   </div>
 );
+
+PriceFilter.propTypes = {
+  handlers: PropTypes.shape(PropTypes.func.isRequired),
+  minPrice: PropTypes.string,
+  maxPrice: PropTypes.string,
+};
 
 export default PriceFilter;

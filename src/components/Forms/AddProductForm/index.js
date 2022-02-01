@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import PropTypes from 'prop-types';
 import productService from '../../../api/productService';
 import { options } from '../../../utils/constants';
 import { productSchema } from '../../../.yup/productSchema';
@@ -50,6 +51,10 @@ const AddProductForm = ({ onClose }) => {
       <input type="submit" />
     </Form>
   );
+};
+
+AddProductForm.propTypes = {
+  onClose: PropTypes.func.isRequired,
 };
 
 export default AddProductForm;

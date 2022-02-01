@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import ROUTE_PATHS from '../../routes/routes';
 import { selectOrderById } from '../../store/ordersSlice';
 import ProductCardOrder from '../ProductCard/ProductCardOrder';
@@ -20,6 +21,11 @@ const OrderCard = ({ id, isList }) => {
       <h2 className={st.total}>Total: <span>{price}₴</span></h2>
     </div>
   );
+};
+
+OrderCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  isList: PropTypes.bool,
 };
 
 export default OrderCard;

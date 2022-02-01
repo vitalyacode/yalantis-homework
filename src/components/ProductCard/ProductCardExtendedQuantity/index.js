@@ -4,7 +4,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
-import types from '../../../PropTypes/defaultProduct';
 import {
   incrementProduct,
   decrementProduct,
@@ -83,7 +82,7 @@ const ProductCardExtendedQuantity = ({ productId }) => {
 };
 
 ProductCardExtendedQuantity.propTypes = {
-  product: PropTypes.shape(types.defaultProduct),
+  productId: PropTypes.string.isRequired,
 };
 
 export default ProductCardExtendedQuantity;

@@ -4,7 +4,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import st from './index.module.css';
-import types from '../../../PropTypes/defaultProduct';
 import { selectProductById } from '../../../store/productsSlice';
 import Preloader from '../../Preloader';
 import ROUTE_PATHS from '../../../routes/routes';
@@ -48,7 +47,8 @@ const ProductCardEditable = ({ productId, handleFormToggle }) => {
 };
 
 ProductCardEditable.propTypes = {
-  product: PropTypes.shape(types.defaultProduct),
+  productId: PropTypes.string.isRequired,
+  handleFormToggle: PropTypes.func.isRequired,
 };
 
 export default ProductCardEditable;

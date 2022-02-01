@@ -29,13 +29,16 @@ const CartPage = () => {
 
   useEffect(() => () => dispatch(resetCartSlice()), []);
 
+  useEffect(() => {
+    if (status === 'success') {
+      navigate(ROUTE_PATHS.MY_ORDERS);
+    }
+  }, [status]);
+
   const handleSubmit = () => {
     if (products.length) dispatch(createOrderActions.init(products));
   };
 
-  if (status === 'success') {
-    navigate(ROUTE_PATHS.MY_ORDERS);
-  }
   if (status === 'error') return <ErrorCard />;
 
   return (

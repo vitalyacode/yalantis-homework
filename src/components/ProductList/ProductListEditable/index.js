@@ -8,6 +8,7 @@ const ProductListEditable = ({ productIds, handleFormToggle }) => productIds.map
 
 ProductListEditable.propTypes = {
   productIds: PropTypes.arrayOf(PropTypes.string),
+  handleFormToggle: PropTypes.func.isRequired,
 };
 
 export default ProductListEditable;

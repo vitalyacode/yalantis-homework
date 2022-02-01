@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
 
 const Pagination = ({
@@ -48,6 +49,13 @@ const Pagination = ({
       <button onClick={nextPage}>〉</button>
     </div>
   );
+};
+
+Pagination.propTypes = {
+  totalItems: PropTypes.number.isRequired,
+  perPage: PropTypes.number.isRequired,
+  handler: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
 };
 
 export default Pagination;

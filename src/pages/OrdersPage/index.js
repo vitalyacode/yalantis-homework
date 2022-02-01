@@ -7,12 +7,13 @@ import st from './index.module.css';
 import {
   fetchOrders, resetOrdersSlice, selectOrderIds, selectOrdersStatus,
 } from '../../store/ordersSlice';
+import { mapReverse } from '../../utils/mapReverse';
 
 const OrdersPage = () => {
   const dispatch = useDispatch();
 
   const status = useSelector(selectOrdersStatus);
-  const orderIds = useSelector(selectOrderIds);
+  const orderIds = mapReverse(useSelector(selectOrderIds));// reverse to show most recent order first
 
   useEffect(() => {
     dispatch(resetOrdersSlice());

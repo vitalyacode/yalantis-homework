@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const defaultProduct = {
+export const defaultProduct = {
   isEditable: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -10,4 +10,9 @@ const defaultProduct = {
   updatedAt: PropTypes.string.isRequired,
 };
 
-export default defaultProduct;
+export const defaultEditProductForm = {
+  name: PropTypes.string,
+  origin: PropTypes.string,
+  price: PropTypes.number,
+  id: PropTypes.string,
+};

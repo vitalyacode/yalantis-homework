@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import st from './index.module.css';
 
 const Modal = ({
@@ -25,6 +26,13 @@ const Modal = ({
     </div>,
     document.querySelector('#root')
   );
+};
+
+Modal.propTypes = {
+  children: PropTypes.element,
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string,
 };
 
 export default Modal;
