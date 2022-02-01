@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ProductCardEditable from '../../ProductCard/ProductCardEditable';
 
 const ProductListEditable = ({ productIds, handleFormToggle }) => productIds.map(
-  (p) => <ProductCardEditable productId={p} key={p} handleFormToggle={handleFormToggle} />
+  (id) => <ProductCardEditable productId={id} key={id} handleFormToggle={handleFormToggle} />
 );
 
 ProductListEditable.propTypes = {

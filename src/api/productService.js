@@ -1,13 +1,6 @@
-import axios from 'axios';
 import { PER_PAGE } from '../utils/constants';
 import { makeError } from '../utils/makeError';
-
-require('dotenv').config();
-
-const httpClient = axios.create({
-  baseURL: 'https://yalantis-react-school-api.yalantis.com/api/v1',
-  headers: { Authorization: process.env.REACT_APP_API_KEY },
-});
+import { httpClient } from './client';
 
 const getPage = async (page, parameters) => {
   // if perPage provided, gets it from parameters

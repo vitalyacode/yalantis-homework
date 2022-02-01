@@ -22,6 +22,7 @@ import PriceFilter from '../../components/PriceFilter';
 import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
 import useDebouncedValues from '../../hooks/useDebouncedValues';
+import { options, paginationOptions } from '../../utils/constants';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -31,19 +32,6 @@ const ProductsPage = () => {
   const { page } = paginationInfo;
 
   const status = useSelector(selectStatus);
-
-  const options = [
-    { value: 'europe', label: 'Europe' },
-    { value: 'usa', label: 'USA' },
-    { value: 'africa', label: 'Africa' },
-    { value: 'asia', label: 'Asia' },
-  ];
-
-  const paginationOptions = [
-    { value: 10, label: '10' },
-    { value: 25, label: '25' },
-    { value: 50, label: '50' },
-  ];
 
   const [searchParams, setSearchParams] = useSearchParams();
 

@@ -6,6 +6,8 @@ import st from './index.module.css';
 const AddProduct = () => {
   const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+
   return (
     <div>
       <h1>
@@ -15,10 +17,10 @@ const AddProduct = () => {
       </h1>
       <Modal
         show={show}
-        onClose={() => setShow(false)}
+        onClose={handleClose}
         title="Add product"
       >
-        <AddProductForm />
+        <AddProductForm onClose={handleClose} />
       </Modal>
     </div>
   );

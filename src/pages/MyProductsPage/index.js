@@ -24,6 +24,7 @@ import ProductListEditable from '../../components/ProductList/ProductListEditabl
 import Modal from '../../components/Modal';
 import EditProductForm from '../../components/Forms/EditProductForm';
 import useDebouncedValues from '../../hooks/useDebouncedValues';
+import { options, paginationOptions } from '../../utils/constants';
 
 const MyProductsPage = () => {
   const dispatch = useDispatch();
@@ -36,19 +37,6 @@ const MyProductsPage = () => {
 
   const [show, setShow] = useState(false);
   const [initFormObject, setInitFormObject] = useState({});
-
-  const options = [
-    { value: 'europe', label: 'Europe' },
-    { value: 'usa', label: 'USA' },
-    { value: 'africa', label: 'Africa' },
-    { value: 'asia', label: 'Asia' },
-  ];
-
-  const paginationOptions = [
-    { value: 10, label: '10' },
-    { value: 25, label: '25' },
-    { value: 50, label: '50' },
-  ];
 
   const [searchParams, setSearchParams] = useSearchParams();
 
