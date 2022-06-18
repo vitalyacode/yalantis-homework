@@ -9,7 +9,7 @@ const Header = () => (
   <header className={st.headerStyle}>
     <div className={st.headerWrapper}>
       <h1 className={st.logo}>
-        <Link to={ROUTE_PATHS.HOME}>VitalX</Link>
+        <Link to={ROUTE_PATHS.HOME}>Olx</Link>
       </h1>
       <div className={st.actions}>
         <h1>
