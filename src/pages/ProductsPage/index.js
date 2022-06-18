@@ -9,19 +9,22 @@ import {
   selectStatus,
   setPage,
   setPerPage,
+  resetProductsSlice,
 } from '../../store/productsSlice';
 import { pruneObject } from '../../utils/pruneObject';
 import { toSearchObject } from '../../utils/toSearchObject';
-import CountryFilter from '../CountryFilter';
-import ErrorCard from '../ErrorCard';
-import Pagination from '../Pagination';
-import PerPage from '../PerPage';
-import Preloader from '../Preloader';
-import PriceFilter from '../PriceFilter';
-import ProductList from '../ProductList/index';
+import CountryFilter from '../../components/CountryFilter';
+import ErrorCard from '../../components/ErrorCard';
+import Pagination from '../../components/Pagination';
+import PerPage from '../../components/PerPage';
+import Preloader from '../../components/Preloader';
+import PriceFilter from '../../components/PriceFilter';
+import ProductList from '../../components/ProductList/index';
 import st from './index.module.css';
+import useDebouncedValues from '../../hooks/useDebouncedValues';
+import { options, paginationOptions } from '../../utils/constants';
 
-const ProductPage = () => {
+const ProductsPage = () => {
   const dispatch = useDispatch();
   const products = useSelector(selectProductIds);
   const paginationInfo = useSelector(selectPaginationInfo);
@@ -30,36 +33,24 @@ const ProductPage = () => {
 
   const status = useSelector(selectStatus);
 
-  const options = [
-    { value: 'europe', label: 'Europe' },
-    { value: 'usa', label: 'USA' },
-    { value: 'africa', label: 'Africa' },
-    { value: 'asia', label: 'Asia' },
-  ];
-
-  const paginationOptions = [
-    { value: 10, label: '10' },
-    { value: 25, label: '25' },
-    { value: 50, label: '50' },
-  ];
-
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedPerPage, setSelectedPerPage] = useState(10);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { minPrice, maxPrice, ...priceHandlers } = usePriceInputs();
-
-  const handleCountryChange = (selected) => {
-    setSelectedCountries(selected);
-  };
-  const handlePerPageChange = (selected) => {
-    setSelectedPerPage(selected);
-    dispatch(setPerPage);
-  };
+  const [selectedCountries, setSelectedCountries] = useState(
+    searchParams
+      .get('origins')
+      ?.split(',')
+      .map((country) => options.find((option) => option.value === country)) || []
+  );
+  const [selectedPerPage, setSelectedPerPage] = useState(
+    paginationOptions.find((option) => option.value === parseInt(searchParams.get('perPage'), 10))
+    || paginationOptions[0]
+  );
+  const {
+    minPrice, maxPrice, ...priceHandlers
+  } = usePriceInputs(searchParams);
 
   const handleSearch = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     const countries = selectedCountries.map((el) => el.value);
 
@@ -73,15 +64,37 @@ const ProductPage = () => {
     setSearchParams(parameters);
   };
 
+  const handleCountryChange = (selected) => {
+    setSelectedCountries(selected);
+  };
+  const handlePerPageChange = (selected) => {
+    setSelectedPerPage(selected);
+    dispatch(setPerPage);
+  };
   const parameters = toSearchObject(searchParams);
 
+  // control request amount by "status" property in slice
   useEffect(() => {
-    dispatch(fetchProducts({ page, parameters }));
-  }, [page, dispatch]);
+    if (status !== 'idle' && status !== 'loading') dispatch(fetchProducts({ page, parameters }));
+  }, [page, dispatch, searchParams]);
+
+  const [
+    debouncedCountries,
+    debouncedMinPrice,
+    debouncedMaxPrice,
+  ] = useDebouncedValues(selectedCountries, minPrice, maxPrice, 500);
+  useEffect(() => {
+    if (status !== 'idle') {
+      handleSearch();
+    }
+  }, [debouncedCountries, debouncedMinPrice, debouncedMaxPrice]);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page: 1, parameters }));
-  }, [searchParams]);
+    if (status === 'idle') dispatch(fetchProducts({ page: 1, parameters }));
+    return () => {
+      dispatch(resetProductsSlice());
+    };
+  }, []);
 
   if (status === 'error') return <ErrorCard />;
   if (status === 'loading' || status === 'idle') return <Preloader />;
@@ -106,7 +119,7 @@ const ProductPage = () => {
           selectedPerPage={selectedPerPage}
           handlePerPageChange={handlePerPageChange}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className={st.filterSearch}>Search</button>
       </form>
       <ProductList productIds={products} />
       <Pagination
@@ -115,8 +128,8 @@ const ProductPage = () => {
         page={page}
         handler={(p) => dispatch(setPage(p))}
       />
-    </div >
+    </div>
   );
 };
 
-export default ProductPage;
+export default ProductsPage;

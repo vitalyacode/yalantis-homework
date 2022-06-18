@@ -4,7 +4,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import st from './index.module.css';
-import types from '../../../PropTypes/defaultProduct';
 import { addProduct } from '../../../store/cartSlice';
 import { selectProductById } from '../../../store/productsSlice';
 import productService from '../../../api/productService';
@@ -13,9 +12,9 @@ import ROUTE_PATHS from '../../../routes/routes';
 
 const ProductCardExtended = ({ productId }) => {
   const dispatch = useDispatch();
-  const [product, setProduct] = useState(
-    useSelector((state) => selectProductById(state, productId))
-  );
+
+  const storeProduct = useSelector((state) => selectProductById(state, productId));
+  const [product, setProduct] = useState(storeProduct);
 
   useEffect(() => {
     if (!product) {
@@ -62,7 +61,7 @@ const ProductCardExtended = ({ productId }) => {
 };
 
 ProductCardExtended.propTypes = {
-  product: PropTypes.shape(types.defaultProduct),
+  productId: PropTypes.string.isRequired,
 };
 
 export default ProductCardExtended;

@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.flex {
+  display: flex;
+}
+
 .price {
   position: absolute;
   left: 65px;

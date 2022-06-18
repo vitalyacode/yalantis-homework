@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ProductCardExtended from '../ProductCard/ProductCardExtended/index';
+import ProductCardExtended from '../../components/ProductCard/ProductCardExtended/index';
 
 const ProductInfo = () => {
   const { id } = useParams();

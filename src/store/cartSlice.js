@@ -1,13 +1,27 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createOrderActions } from '../utils/constants';
 
 const cartAdapter = createEntityAdapter(); // each entity will also have *quantity* property
 
-const initialState = cartAdapter.getInitialState({});
+const initialState = cartAdapter.getInitialState({
+  status: 'idle',
+});
+
+// commented code according to hw-4 guidelines
+
+// export const postOrder = createAsyncThunk(
+//   'cart/postOrder',
+//   async (payload) => {
+//     const response = await orderService.postOrder(payload);
+//     return response;
+//   }
+// );
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    resetCartSlice: (state) => initialState,
     addProduct: (state, action) => {
       const productToUpdate = state.entities[action.payload.id]; // might not exist
       // if productToUpdate doesn't exist, insert payload object with additional property "quantity"
@@ -51,13 +65,25 @@ const cartSlice = createSlice({
       return state;
     },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(createOrderActions.success, (state) => {
+        state.status = 'success';
+        state = initialState;
+      })
+      .addCase(createOrderActions.error, (state) => {
+        state.status = 'error';
+      });
+  },
 });
 
 export const {
-  addProduct, incrementProduct, decrementProduct, setQuantity, removeProduct,
+  addProduct, incrementProduct, decrementProduct, setQuantity, removeProduct, resetCartSlice,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const selectCartStatus = (state) => state.cart.status;
 
 export const {
   selectAll: selectAllCartProducts,

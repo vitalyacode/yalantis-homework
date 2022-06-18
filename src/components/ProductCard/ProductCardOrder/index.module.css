@@ -1,0 +1,18 @@
+.productCardOrder {
+  padding: 15px;
+  margin-left: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.productCardOrder * {
+  margin: 0;
+}
+
+.productName {
+  font-size: 20px;
+}
+
+.price {
+  height: fit-content;
+}

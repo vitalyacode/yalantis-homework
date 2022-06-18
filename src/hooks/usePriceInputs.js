@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-const usePriceInputs = () => {
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+const usePriceInputs = (searchParams) => {
+  const [minPrice, setMinPrice] = useState(searchParams.get('minPrice') || '');
+  const [maxPrice, setMaxPrice] = useState(searchParams.get('maxPrice') || '');
 
   const regex = /^[0-9]*$/;
 
@@ -18,7 +18,7 @@ const usePriceInputs = () => {
   };
 
   return {
-    minPrice, handleMinPrice, maxPrice, handleMaxPrice, validateRange,
+    minPrice, handleMinPrice, maxPrice, handleMaxPrice, validateRange, setMinPrice, setMaxPrice,
   };
 };
 
